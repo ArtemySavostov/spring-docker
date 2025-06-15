@@ -19,8 +19,8 @@ sudo apt-get update -qq
 
 
 wait_for_dpkg
-sudo apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-compose
-
+sudo apt install docker.io -y
+sudo apt install docker-compose -y
 sudo groupadd docker
 
 grep docker /etc/group
@@ -39,9 +39,9 @@ mv Dockerfile docker-compose.yml  nginx/ ./spring-petclinic/
 
 cd spring-petclinic
 
-/usr/bin/docker --version
+docker --version
 
-/usr/bin/docker compose version
+docker-compose version
 
 echo 'Ready to start build docker'
 #docker-compose up -d
