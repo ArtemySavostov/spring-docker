@@ -44,4 +44,4 @@ docker --version
 docker-compose version
 
 echo 'Ready to start build docker'
-#docker-compose up -d
+docker-compose up -d
