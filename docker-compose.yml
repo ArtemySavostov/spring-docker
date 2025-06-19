@@ -22,7 +22,7 @@ services:
     depends_on:
       - petclinic
   nginx:
-    image: ./nginx
+    build: ./nginx
     restart: always
     volumes: 
       - ./nginx/conf.d:/etc/nginx/conf.d
