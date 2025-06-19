@@ -32,14 +32,15 @@ sudo systemctl enable docker
 sudo systemctl start docker
 
 # Ждем запуска Docker daemon
-sleep 10
+sleep 15
 
-# Проверяем что Docker запущен
-sudo systemctl status docker
-
-# Переключаемся на пользователя ubuntu для работы с Docker
-sudo -u ubuntu docker --version
-sudo -u ubuntu docker-compose version
+# Проверяем что Docker запущен (без интерактивного вывода)
+if sudo systemctl is-active --quiet docker; then
+    echo "Docker daemon запущен успешно"
+else
+    echo "Ошибка: Docker daemon не запущен"
+    exit 1
+fi
 
 git clone --depth 1 https://github.com/spring-projects/spring-petclinic.git
 
