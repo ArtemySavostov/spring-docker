@@ -1,10 +1,9 @@
-FROM maven as builder
+FROM maven:3.8.4-openjdk-17 as builder
 WORKDIR /build
-COPY mvnw pom.xml ./
-COPY ./ ./
-RUN mvn clean package
+COPY . .
+RUN mvn clean package -DskipTests
 
-FROM openjdk
+FROM openjdk:17-jre-slim
 EXPOSE 8080
-COPY --from=builder /build/target/spring-petclinic-3.4.0-SNAPSHOT.jar app.jar
+COPY --from=builder /build/target/*.jar app.jar
 ENTRYPOINT ["java", "-Dspring.profiles.active=mysql", "-jar", "app.jar"]
