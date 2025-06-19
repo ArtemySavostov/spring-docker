@@ -11,27 +11,35 @@ wait_for_dpkg() {
   done
 }
 
-sleep 10 
-
+sleep 10
 
 wait_for_dpkg
 sudo apt-get update -qq
 
-
 wait_for_dpkg
 sudo apt install docker.io -y
 sudo apt install docker-compose -y
-sudo groupadd docker
 
-grep docker /etc/group
+# Создаем группу docker если её нет
+sudo groupadd docker 2>/dev/null || true
 
+# Добавляем пользователя ubuntu в группу docker
 sudo usermod -aG docker ubuntu
 
+# Перезапускаем Docker daemon
 sudo systemctl daemon-reload
-sudo systemctl start docker &
-sleep 30
+sudo systemctl enable docker
+sudo systemctl start docker
 
-export PATH=$PATH:/usr/bin
+# Ждем запуска Docker daemon
+sleep 10
+
+# Проверяем что Docker запущен
+sudo systemctl status docker
+
+# Переключаемся на пользователя ubuntu для работы с Docker
+sudo -u ubuntu docker --version
+sudo -u ubuntu docker-compose version
 
 git clone --depth 1 https://github.com/spring-projects/spring-petclinic.git
 
@@ -39,9 +47,5 @@ mv Dockerfile docker-compose.yml  nginx/ ./spring-petclinic/
 
 cd spring-petclinic
 
-docker --version
-
-docker-compose version
-
 echo 'Ready to start build docker'
-docker-compose up -d
+sudo -u ubuntu docker-compose up -d
