@@ -16,7 +16,7 @@ services:
   app:
     restart: always
     build: .
-    ports: 
+    ports:
       - "8080:8080"
     entrypoint: ["java", "-Dspring.profiles.active=mysql", "-Dspring.datasource.url=${MYSQL_URL:-jdbc:mysql://petclinic/petclinic}", "-jar", "app.jar"]
     depends_on:
@@ -24,11 +24,10 @@ services:
   nginx:
     build: ./nginx
     restart: always
-    volumes: 
+    volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
     ports:
       - "80:80"
       - "443:443"
     depends_on:
       - "app"
-    entrypoint: ["/bin/bash", "/usr/sbin/nginx", "-g", "daemon off;"]
