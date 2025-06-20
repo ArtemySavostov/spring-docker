@@ -1,5 +1,5 @@
 output "static_ip_address" {
-  value = data.yandex_vpc_address.external_ip.external_ipv4_address[0].address
+  value = "158.160.61.159"
   description = "Static IP address of the VM"
 }
 
