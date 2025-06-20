@@ -5,7 +5,7 @@ resource "null_resource" "vm_setup" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      host        = "158.160.61.159"
+      host        = data.yandex_vpc_address.external_ip.external_ipv4_address[0].address
       agent       = true
     }
     inline = [

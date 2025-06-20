@@ -44,10 +44,4 @@ variable "ssh_public_key_path" {
   description = "Path to SSH public key"
   type        = string
   default     = "~/.ssh/terraform-key.pub"
-}
-
-variable "nat_ip" {
-  description = "Static NAT IP address"
-  type        = string
-  default     = "158.160.61.159"
 } 

@@ -14,6 +14,11 @@ provider "yandex" {
   zone = var.zone
 }
 
+# Data source для получения внешнего IP адреса
+data "yandex_vpc_address" "external_ip" {
+  name = "external-ip"
+}
+
 resource "yandex_vpc_network" "default" {
   name = "terraform-network"
 }
@@ -46,7 +51,7 @@ resource "yandex_compute_instance" "ubuntu-vm" {
   network_interface {
     subnet_id = yandex_vpc_subnet.default.id
     nat       = true
-    nat_ip_address = var.nat_ip
+    nat_ip_address = data.yandex_vpc_address.external_ip.external_ipv4_address[0].address
   }
 
   metadata = {
